@@ -16,11 +16,11 @@ app.add_middleware(
 )
 
 
-@app.get("/get_email_id/")
+@app.post("/get_email_id/")
 async def get_email_id(data: EmailNameData):
     return jsonable_encoder(await get_email_id_handler(data.email))
 
 
-@app.get("/get_code_from_id/")
+@app.post("/get_code_from_id/")
 async def get_code_from_message(data: EmailIDData):
     return jsonable_encoder(await get_code_from_id_handler(data.email_id))

@@ -1,5 +1,7 @@
 import os
+import re
 
+from bs4 import BeautifulSoup
 from aiohttp import ClientSession
 
 
@@ -23,4 +25,8 @@ async def get_code_from_id_handler(email_id: int):
     if not data.get("fullmessage", None):
         return data['value']
     else:
-        return data['fullmessage']
+        soup = BeautifulSoup(data['fullmessage'], "lxml")
+        all_md_text = soup.find_all('span', class_="mb_text")
+        match = [re.search(r"( \d{5})", text.text) for text in all_md_text]
+        code = list(filter(lambda x: x is not None, match))
+        return int(code[0].group(1))
