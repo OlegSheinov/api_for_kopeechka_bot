@@ -1,15 +1,15 @@
 import os
 import re
 
-from bs4 import BeautifulSoup
 from aiohttp import ClientSession
+from bs4 import BeautifulSoup
 
 
 async def get_email_id_handler(email: str):
-    url = f"https://api.kopeechka.store/mailbox-get-fresh-id?token={os.getenv('TOKEN')}" \
-          f"&site={os.getenv('SITE')}" \
-          f"&email={email}" \
-          f"&type=json&api=2.0"
+    url = f"https://api.kopeechka.store/mailbox-reorder?site={os.getenv('SITE')}" \
+          f"&email={email}&regex=&" \
+          f"token={os.getenv('TOKEN')}" \
+          f"&type=json&subject=&api=2.0"
     async with ClientSession() as session:
         async with session.get(url) as response:
             data = await response.json()
